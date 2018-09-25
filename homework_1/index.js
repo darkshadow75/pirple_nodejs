@@ -38,13 +38,11 @@ var unifiedServer = function(req,res){
 
     console.log("Path requested: " +trimmedPath);
 
+    // Call choseHandler method and route 
     chosenHandler(data,function(statusCode,payload){
         statusCode = typeof(statusCode) == 'number' ? statusCode : '200';
 
         payload = typeof(payload) == 'object' ? payload : {};
-
-        // var stringifiedPayload = JSON.stringify(payload);
-
 
         // Return the response
         res.writeHeader(statusCode);
@@ -53,24 +51,23 @@ var unifiedServer = function(req,res){
         console.log("Returning this response: ", statusCode,payload);
     });
 
-    // Call the choseHandler and route 
-
-
 };
 
 // Handlers
 var handlers = {};
 
 handlers.hello = function(data,callback){
-    var greeting = '<h2>Welcome to my page!</h2>'
-    var htmlCode = '<html><body>'+greeting+'</body></html>'
+    var greeting = '<h2>Welcome to my Demo Page!</h2>';
+    var htmlCode = '<html><body>'+greeting+'</body></html>';
     
     callback(200, {'response' : htmlCode });
 };
 
 handlers.notFound = function(data,callback){
+    var errorMessage = '<h1>Page Not Found</h1>';
+    var htmlCode = '<html><body>'+errorMessage+'</body></html>';
 
-    callback(404,{'response' : 'Page Not Found'});
+    callback(404,{'response' : htmlCode });
 };
 
 // Request router
